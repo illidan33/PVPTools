@@ -1,0 +1,17 @@
+## Interface: 80000
+## Version: 1.0.0
+## Title: TargetCooldowns
+## Author: illidan33
+## Notes: Displays target's cooldowns.
+## Notes-zhCN: 显示目标技能冷却时间
+## SavedVariables: TargetCooldownsDB
+## OptionalDeps: Ace3, LibStub
+## X-Embeds: Ace3
+
+#@no-lib-strip@
+embeds.xml
+#@end-no-lib-strip@
+
+Locales\locale.xml
+
+Main.lua
