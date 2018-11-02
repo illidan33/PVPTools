@@ -1,0 +1,5 @@
+<Bindings>
+	<Binding name="PVPTools_Enemy_Coming" header="PVPTools" category="ADDONS">
+        PVPTools_Enemy_Coming()
+	</Binding>
+</Bindings>

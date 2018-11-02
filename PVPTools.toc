@@ -1,10 +1,10 @@
 ## Interface: 80000
 ## Version: 1.0.0
-## Title: TargetCooldowns
+## Title: PVPTools
 ## Author: illidan33
-## Notes: Displays target's cooldowns.
-## Notes-zhCN: 显示目标技能冷却时间
-## SavedVariables: TargetCooldownsDB
+## Notes: Tools for PVP.
+## Notes-zhCN: PVP工具集合
+## SavedVariables: PVPToolsDB
 ## OptionalDeps: Ace3, LibStub
 ## X-Embeds: Ace3
 
