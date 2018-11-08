@@ -1,5 +1,5 @@
 <Bindings>
 	<Binding name="PVPTools_Enemy_Coming" header="PVPTools" category="ADDONS">
-        PVPTools_Enemy_Coming()
+        PVPTools_Enemy_Coming("target")
 	</Binding>
 </Bindings>
