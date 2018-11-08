@@ -19,7 +19,7 @@ local options = {
         showMessageAuto = {
             type = "toggle",
             name = L["showMessageAuto"],
-            desc = L["textDhowMessageAuto"],
+            desc = L["textShowMessageAuto"],
             get = function(info)
                 return PVPTools.db.profile.showMessageAuto
             end,
@@ -79,7 +79,7 @@ local options = {
 
 local defaults = {
     profile = {
-        notifyStealth = false,
+        notifyStealth = true,
         enemy = {},
         showMessageAuto = true,
         isPlayer = true,
