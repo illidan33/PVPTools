@@ -38,18 +38,6 @@ local options = {
                 PVPTools.db.profile.isPlayer = value or false
             end,
         },
-        enemyCache = {
-            type = "toggle",
-            name = L["enemyCache"],
-            desc = L["textEnemyCache"],
-            get = function(info)
-                return PVPTools.db.profile.enemyCache
-            end,
-            set = function(info, value)
-                PVPTools.db.profile.enemy = {}
-                PVPTools.db.profile.enemyCache = value or false
-            end,
-        },
         top = {
             type = "input",
             name = "top",
@@ -83,7 +71,6 @@ local defaults = {
         enemy = {},
         showMessageAuto = true,
         isPlayer = true,
-        enemyCache = false,
         frameTop = -540,
         frameLeft = 550,
     },
@@ -107,6 +94,9 @@ end
 function PVPTools:OnEnable()
     PVPTools.db.profile.enemy = {}
     PVPTools_Init_Frame()
+    if PVPTools.db.profile.notifyStealth == true then
+        PVPTools:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+    end
 end
 
 function SendMessageByUnit(unit)
@@ -114,17 +104,6 @@ function SendMessageByUnit(unit)
     local unitName, _ = UnitName(unit)
     local className, _ = UnitClass(unit)
 
-    if PVPTools.db.profile.enemyCache == true then
-        if unit ~= "target" or unit ~= "mouseover" then
-            local flag = unitName .. "-" .. className
-            for _, v in pairs(PVPTools.db.profile.enemy) do
-                if v == flag then
-                    return
-                end
-            end
-            table.insert(PVPTools.db.profile.enemy, flag)
-        end
-    end
     local zone = GetSubZoneText()
     if not zone then
         return
@@ -171,14 +150,11 @@ function PVPTools_Enemy_Coming(unit)
 end
 
 function PVPTools:NAME_PLATE_UNIT_ADDED(_, unitToken)
-    --self:Print("NAME_PLATE_UNIT_ADDED")
+    self:Print("NAME_PLATE_UNIT_ADDED")
 
-    if self.db.profile.notifyStealth ~= true then
-        return
-    end
     local unit = unitToken;
 
-    if PVPTools.db.profile.isPlayer == true and not UnitIsPlayer(unit) then
+    if not UnitIsPlayer(unit) then
         return
     end
     if not UnitIsEnemy("player", unit) then
@@ -188,9 +164,13 @@ function PVPTools:NAME_PLATE_UNIT_ADDED(_, unitToken)
     if classFileName == "HUNTER" and classFileName == "ROGUE" and classFileName == "DRUID" then
         if CheckInteractDistance("target", 1) then
             SendMessageByUnit(unit)
+		else
+			print("too far");
         end
+	else
+		print("not stealth");
     end
-
+	
 end
 
 function PVPTools_Init_Frame()
@@ -232,11 +212,7 @@ function PVPTools_Init_Frame()
         PVPTools:RegisterEvent("NAME_PLATE_UNIT_ADDED")
     end
     BtnNotifyStealth:SetCallback("OnClick", function()
-        if PVPTools.db.profile.enemyCache == true then
-            PVPTools.db.profile.enemy = {}
-        end
-        local flag = PVPTools.db.profile.notifyStealth
-        if flag == true then
+        if PVPTools.db.profile.notifyStealth == true then
             BtnNotifyStealth:SetText(L["textStealth"] .. ":" .. L["close"])
             PVPTools:UnregisterEvent("NAME_PLATE_UNIT_ADDED");
             PVPTools.db.profile.notifyStealth = false
